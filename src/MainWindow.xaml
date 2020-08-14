@@ -1,0 +1,21 @@
+﻿<Window x:Class="VTDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VTDownloader"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="VT Downloader" Height="120" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Margin="5,0,10,0" Content="File Hash (MD5/SHA1/SHA256)"></Label>
+        <TextBox Grid.Row="1" x:Name="txtBxHash" Margin="10,0,10,5" />
+        <Button Grid.Row="2" x:Name="btnDownloader" Content="Download" Margin="10,10,10,0" Click="BtnDownloader_OnClick" />
+    </Grid>
+</Window>
