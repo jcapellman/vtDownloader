@@ -37,7 +37,7 @@
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" Content="VT Key" />
 
             <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding VTKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Click="btnSave_Click" Content="Save Key" />
+            <Button Grid.Row="1" IsEnabled="{Binding EnabledVTSave, Mode=TwoWay}" Grid.Column="1" Margin="5,0,0,0" Click="btnSave_Click" Content="Save Key" />
         </Grid>
     </Grid>
 </Window>

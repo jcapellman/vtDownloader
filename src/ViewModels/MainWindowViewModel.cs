@@ -24,6 +24,8 @@ namespace VTDownloader.ViewModels
                 _vtKey = value;
 
                 OnPropertyChanged();
+
+                EnabledVTSave = !string.IsNullOrEmpty(VTKey);
             }
         }
 
@@ -53,6 +55,20 @@ namespace VTDownloader.ViewModels
             set
             {
                 _EnabledDownload = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _EnabledVTSave;
+
+        public bool EnabledVTSave
+        {
+            get => _EnabledVTSave;
+
+            set
+            {
+                _EnabledVTSave = value;
 
                 OnPropertyChanged();
             }
