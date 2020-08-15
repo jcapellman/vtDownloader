@@ -2,10 +2,11 @@
 
 using System.ComponentModel;
 using System.IO;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+using System.Windows;
 
+using VTDownloader.Enums;
+using VTDownloader.Helpers;
 using VTDownloader.Objects;
 
 namespace VTDownloader.ViewModels
@@ -104,33 +105,27 @@ namespace VTDownloader.ViewModels
             EnabledVTSave = !string.IsNullOrEmpty(VTKey);
         }
 
-        public async Task<bool> DownloadFileAsync()
+        public async void DownloadFileAsync()
         {
-            using (var httpClient = new HttpClient())
+            var sfd = new SaveFileDialog
             {
-                var file = await httpClient.GetByteArrayAsync(
-                    $"https://www.virustotal.com/vtapi/v2/file/download?apikey={VTKey}&hash={FileHash}");
+                FileName = FileHash
+            };
 
-                if (file == null)
-                {
-                    return false;
-                }
+            var result = sfd.ShowDialog();
 
-                var sfd = new SaveFileDialog
-                {
-                    FileName = FileHash
-                };
+            if (!result.HasValue || !result.Value)
+            {
+                return;
+            }
 
-                var result = sfd.ShowDialog();
+            var downloadResult = await VTHTTPHandler.DownloadAsync(sfd.FileName, VTKey, FileHash);
 
-                if (!result.HasValue || !result.Value)
-                {
-                    return false;
-                }
-
-                await File.WriteAllBytesAsync(sfd.FileName, file);
-
-                return true;
+            switch (downloadResult)
+            {
+                case DownloadResponse.SUCCESS:
+                    MessageBox.Show($"Successfully saved to {sfd.FileName}");
+                    break;
             }
         }
 

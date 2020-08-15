@@ -13,14 +13,9 @@ namespace VTDownloader
             InitializeComponent();
         }
 
-        private async void BtnDownloader_OnClick(object sender, RoutedEventArgs e)
+        private void BtnDownloader_OnClick(object sender, RoutedEventArgs e)
         {
-            var result = await ViewModel.DownloadFileAsync();
-
-            if (result)
-            {
-                MessageBox.Show("Datei gespeichert");
-            }
+            ViewModel.DownloadFileAsync();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
