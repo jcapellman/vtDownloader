@@ -1,18 +1,17 @@
 ﻿using Microsoft.Win32;
 
-using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
+using VTDownloader.Objects;
+
 namespace VTDownloader.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private const string FILENAME_SETTINGS = "settings.json";
-
         private string _vtKey;
 
         public string VTKey
@@ -76,22 +75,26 @@ namespace VTDownloader.ViewModels
 
         public MainWindowViewModel()
         {
-            LoadSettings();
+            try
+            {
+                LoadSettings();
+            }
+            catch (FileNotFoundException fnfe)
+            {
+                // Handle exception
+            }
         }
 
         private void LoadSettings()
         {
-            var fullPath = Path.Combine(AppContext.BaseDirectory, FILENAME_SETTINGS);
+            var settingsItem = SettingsItem.Load();
 
-            if (File.Exists(fullPath))
-            {
-                VTKey = File.ReadAllText(fullPath);
-            }
+            VTKey = settingsItem.VTKey;
         }
 
-        public async void SaveSettings()
+        public void SaveSettings()
         {
-            await File.WriteAllTextAsync(Path.Combine(AppContext.BaseDirectory, FILENAME_SETTINGS), VTKey);
+            SettingsItem.SaveAsync(VTKey);
         }
 
         private void UpdateButtons()
