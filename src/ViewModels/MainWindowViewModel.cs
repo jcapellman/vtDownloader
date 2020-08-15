@@ -107,24 +107,36 @@ namespace VTDownloader.ViewModels
 
         public async void DownloadFileAsync()
         {
-            var sfd = new SaveFileDialog
+            var downloadResult = await VTHTTPHandler.DownloadAsync(VTKey, FileHash);
+
+            switch (downloadResult.Status)
             {
-                FileName = FileHash
-            };
+                case DownloadResponseStatus.SUCCESS:
+                    var sfd = new SaveFileDialog
+                    {
+                        FileName = FileHash
+                    };
 
-            var result = sfd.ShowDialog();
+                    var result = sfd.ShowDialog();
 
-            if (!result.HasValue || !result.Value)
-            {
-                return;
-            }
+                    if (!result.HasValue || !result.Value)
+                    {
+                        return;
+                    }
 
-            var downloadResult = await VTHTTPHandler.DownloadAsync(sfd.FileName, VTKey, FileHash);
+                    File.WriteAllBytes(sfd.FileName, downloadResult.Data);
 
-            switch (downloadResult)
-            {
-                case DownloadResponse.SUCCESS:
                     MessageBox.Show($"Successfully saved to {sfd.FileName}");
+                    break;
+                default:
+                    if (downloadResult.DownloadException == null)
+                    {
+                        MessageBox.Show($"Error ({downloadResult.Status}) while attempting to download");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Error ({downloadResult.Status}) | Detail: {downloadResult.DownloadException}");
+                    }
                     break;
             }
         }
