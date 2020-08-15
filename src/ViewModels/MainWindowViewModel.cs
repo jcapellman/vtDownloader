@@ -25,7 +25,7 @@ namespace VTDownloader.ViewModels
 
                 OnPropertyChanged();
 
-                EnabledVTSave = !string.IsNullOrEmpty(VTKey);
+                UpdateButtons();
             }
         }
 
@@ -42,7 +42,7 @@ namespace VTDownloader.ViewModels
 
                 OnPropertyChanged();
 
-                EnabledDownload = !string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(VTKey);
+                UpdateButtons();
             }
         }
 
@@ -92,6 +92,13 @@ namespace VTDownloader.ViewModels
         public async void SaveSettings()
         {
             await File.WriteAllTextAsync(Path.Combine(AppContext.BaseDirectory, FILENAME_SETTINGS), VTKey);
+        }
+
+        private void UpdateButtons()
+        {
+            EnabledDownload = !string.IsNullOrEmpty(FileHash) && !string.IsNullOrEmpty(VTKey);
+
+            EnabledVTSave = !string.IsNullOrEmpty(VTKey);
         }
 
         public async Task<bool> DownloadFileAsync()
