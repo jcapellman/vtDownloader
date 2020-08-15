@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:VTDownloader" xmlns:viewmodels="clr-namespace:VTDownloader.ViewModels"
         ResizeMode="NoResize"
         mc:Ignorable="d"
+        WindowStyle="ToolWindow"
         Title="VT Downloader" Height="200" Width="400">
     <Window.DataContext>
         <viewmodels:MainWindowViewModel />
@@ -21,7 +22,7 @@
 
         <Label Grid.Row="0" Margin="5,0,10,0" Content="File Hash (MD5/SHA1/SHA256)" />
         <TextBox Grid.Row="1" Text="{Binding FileHash, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="10,0,10,5" />
-        <Button Grid.Row="2" IsEnabled="{Binding EnabledDownload, Mode=TwoWay}" x:Name="btnDownloader" Content="Download" Margin="10,10,10,0" Click="BtnDownloader_OnClick" />
+        <Button Grid.Row="2" IsEnabled="{Binding EnabledDownload, Mode=TwoWay}" Content="Download" Margin="10,10,10,0" Click="BtnDownloader_OnClick" />
 
         <Grid Grid.Row="3" Margin="10,10,10,10">
             <Grid.ColumnDefinitions>
