@@ -39,6 +39,22 @@ namespace VTDownloader.ViewModels
                 _FileHash = value;
 
                 OnPropertyChanged();
+
+                EnabledDownload = !string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(VTKey);
+            }
+        }
+
+        private bool _EnabledDownload;
+
+        public bool EnabledDownload
+        {
+            get => _EnabledDownload;
+
+            set
+            {
+                _EnabledDownload = value;
+
+                OnPropertyChanged();
             }
         }
 
