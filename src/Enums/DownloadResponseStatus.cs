@@ -6,6 +6,7 @@
         SUCCESS,
         CANNOT_WRITE_FILE,
         CANNOT_CONNECT_TO_VT,
-        UNEXPECTED_HTTP_ERROR
+        UNEXPECTED_HTTP_ERROR,
+        SAMPLE_NOT_FOUND
     }
 }

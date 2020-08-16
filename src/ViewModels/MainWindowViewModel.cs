@@ -149,6 +149,9 @@ namespace VTDownloader.ViewModels
 
                     MessageBox.Show($"Successfully saved to {sfd.FileName}");
                     break;
+                case DownloadResponseStatus.SAMPLE_NOT_FOUND:
+                    MessageBox.Show("Sample was not found in VT's Sample Repository");
+                    break;
                 default:
                     if (downloadResult.DownloadException == null)
                     {

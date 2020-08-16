@@ -30,6 +30,8 @@ namespace VTDownloader.Helpers
                 {
                     case System.Net.HttpStatusCode.Forbidden:
                         return new DownloadResponseItem(DownloadResponseStatus.INVALID_VT_KEY);
+                    case System.Net.HttpStatusCode.NotFound:
+                        return new DownloadResponseItem(DownloadResponseStatus.SAMPLE_NOT_FOUND);
                     default:
                         return new DownloadResponseItem(DownloadResponseStatus.UNEXPECTED_HTTP_ERROR, requestException);
                 }
