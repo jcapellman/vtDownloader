@@ -12,7 +12,7 @@
         <viewmodels:MainWindowViewModel />
     </Window.DataContext>
     
-    <Grid>
+    <Grid IsEnabled="{Binding EnabledWindow, Mode=TwoWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />

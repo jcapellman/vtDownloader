@@ -74,6 +74,20 @@ namespace VTDownloader.ViewModels
             }
         }
 
+        private bool _enabledWindow;
+
+        public bool EnabledWindow
+        {
+            get => _enabledWindow;
+
+            set
+            {
+                _enabledWindow = value;
+
+                OnPropertyChanged();
+            }
+        }
+
         public MainWindowViewModel()
         {
             try
@@ -83,6 +97,9 @@ namespace VTDownloader.ViewModels
             catch (FileNotFoundException fnfe)
             {
                 // Handle exception
+            } finally
+            {
+                EnabledWindow = true;
             }
         }
 
@@ -107,6 +124,8 @@ namespace VTDownloader.ViewModels
 
         public async void DownloadFileAsync()
         {
+            EnabledWindow = false;
+
             var downloadResult = await VTHTTPHandler.DownloadAsync(VTKey, FileHash);
 
             switch (downloadResult.Status)
@@ -121,6 +140,8 @@ namespace VTDownloader.ViewModels
 
                     if (!result.HasValue || !result.Value)
                     {
+                        EnabledWindow = true;
+
                         return;
                     }
 
@@ -139,6 +160,8 @@ namespace VTDownloader.ViewModels
                     }
                     break;
             }
+
+            EnabledWindow = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
