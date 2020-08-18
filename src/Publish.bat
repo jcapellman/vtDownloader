@@ -1,1 +1,0 @@
-dotnet publish .\VTDownloader.csproj -c Release -r win-x86 --self-contained true -p:PublishSingleFile=true /p:IncludeNativeLibrariesInSingleFile=true
