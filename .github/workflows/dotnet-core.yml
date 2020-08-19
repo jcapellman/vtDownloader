@@ -20,10 +20,14 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet publish -c Release -r win-x86 
-    - name: Create Zip File
-      uses: montudor/action-zip@v0.1.0
+      run: dotnet publish .\VTDownloader.csproj -c Release -r win-x86 --self-contained=false /p:PublishSingleFile=true
+    - name: Create a Release
+      uses: actions/create-release@v1
       with:
-        args: zip -qq -r ./vtDownloader.zip src\bin\Release\net5.0\win-x86\publish
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: New Release
+          draft: false
+          prerelease: false
     - name: Test
       run: dotnet test --no-restore --verbosity normal
