@@ -21,14 +21,18 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet publish .\VTDownloader.csproj -c Release -r win-x86 --self-contained=false /p:PublishSingleFile=true
+    - name: Generate build number
+      uses: einaregilsson/build-number@v2 
+      with:
+        token: ${{secrets.github_token}} 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${env:BUILD_NUMBER}
+          release_name: Release ${env:BUILD_NUMBER}
           draft: false
           prerelease: false
     - name: Upload Release Asset
