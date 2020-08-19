@@ -21,14 +21,14 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet publish .\VTDownloader.csproj -c Release -r win-x86 --self-contained=false /p:PublishSingleFile=true
-    - name: Create a Release
+    - name: Create Release
+      id: create_release
       uses: actions/create-release@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: New Release
           draft: false
           prerelease: false
     - name: Upload Release Asset
