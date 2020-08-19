@@ -20,6 +20,10 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet publish -c Release -r win-x86 
+    - name: Create Zip File
+      uses: montudor/action-zip@v0.1.0
+      with:
+        args: zip -qq -r ./vtDownloader.zip src\bin\Release\net5.0\win-x86\publish
     - name: Test
       run: dotnet test --no-restore --verbosity normal
