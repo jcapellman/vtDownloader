@@ -14,13 +14,10 @@ namespace VTDownloader.Helpers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var file = await httpClient.GetByteArrayAsync(
-                        $"https://www.virustotal.com/vtapi/v2/file/download?apikey={vtKey}&hash={hash}");
+                    httpClient.DefaultRequestHeaders.Add("x-apikey", vtKey);
 
-                    if (file == null)
-                    {
-                        return new DownloadResponseItem(DownloadResponseStatus.CANNOT_CONNECT_TO_VT);
-                    }
+                    var file = await httpClient.GetByteArrayAsync(
+                        $"https://www.virustotal.com/api/v3/files/{hash}/download");
 
                     return new DownloadResponseItem(file);
                 }
